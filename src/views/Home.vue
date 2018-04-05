@@ -1,13 +1,15 @@
 <template>
 	<el-row class="container">
 		<el-col :span="24" class="header">
-			<el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
-				{{collapsed?'':sysName}}
-			</el-col>
-			<el-col :span="10">
+			<el-col :span="1">
 				<div class="tools" @click.prevent="collapse">
 					<i class="fa fa-align-justify"></i>
 				</div>
+			</el-col>
+			<el-col :span="19" class="logo">
+				<router-link to="/dashboard">
+					<button class="logo-title-button">{{sysName}}</button>
+				</router-link>
 			</el-col>
 			<el-col :span="4" class="userinfo">
 				<el-dropdown trigger="hover">
@@ -52,17 +54,10 @@
 			</aside>
 			<section class="content-container">
 				<div class="grid-content bg-purple-light">
-					<el-col :span="24" class="breadcrumb-container">
-						<strong class="title">{{$route.name}}</strong>
-						<el-breadcrumb separator="/" class="breadcrumb-inner">
-							<el-breadcrumb-item v-for="item in $route.matched" :key="item.path">
-								{{ item.name }}
-							</el-breadcrumb-item>
-						</el-breadcrumb>
-					</el-col>
 					<el-col :span="24" class="content-wrapper">
 						<transition name="fade" mode="out-in">
 							<router-view></router-view>
+							<el-button>我是个按钮</el-button>
 						</transition>
 					</el-col>
 				</div>
@@ -75,7 +70,7 @@
 	export default {
 		data() {
 			return {
-				sysName:'VUEADMIN',
+				sysName:'大数据精准营销平台',
 				collapsed:false,
 				sysUserName: '',
 				sysUserAvatar: '',
@@ -168,7 +163,6 @@
 				}
 			}
 			.logo {
-				//width:230px;
 				height:60px;
 				font-size: 22px;
 				padding-left:20px;
@@ -185,12 +179,6 @@
 					color:#fff;
 				}
 			}
-			.logo-width{
-				width:230px;
-			}
-			.logo-collapse-width{
-				width:60px
-			}
 			.tools{
 				padding: 0px 23px;
 				width:14px;
@@ -198,10 +186,20 @@
 				line-height: 60px;
 				cursor: pointer;
 			}
+			.logo-title-button {
+				background-color: transparent;
+				cursor: pointer;
+				border: none;
+				display: inline-block;
+				text-decoration: none;
+				height:59px;
+				font-size: 22px;
+				padding-left:20px;
+				color: white;
+			}
 		}
 		.main {
 			display: flex;
-			// background: #324057;
 			position: absolute;
 			top: 60px;
 			bottom: 0px;
@@ -209,26 +207,22 @@
 			aside {
 				flex:0 0 230px;
 				width: 230px;
-				// position: absolute;
-				// top: 0px;
-				// bottom: 0px;
 				.el-menu{
 					height: 100%;
 				}
 				.collapsed{
-					width:60px;
 					.item{
 						position: relative;
 					}
 					.submenu{
-						position:absolute;
+						position: absolute;
 						top:0px;
-						left:60px;
+						left: 60px;
 						z-index:99999;
 						height:auto;
-						display:none;
+						display: none;
+						background-color:aliceblue;
 					}
-
 				}
 			}
 			.menu-collapsed{
@@ -238,19 +232,15 @@
 			.menu-expanded{
 				flex:0 0 230px;
 				width: 230px;
+				.el-menu{
+					width: 230px !important;
+				}
 			}
 			.content-container {
-				// background: #f1f2f7;
 				flex:1;
-				// position: absolute;
-				// right: 0px;
-				// top: 0px;
-				// bottom: 0px;
-				// left: 230px;
 				overflow-y: scroll;
 				padding: 20px;
 				.breadcrumb-container {
-					//margin-bottom: 15px;
 					.title {
 						width: 200px;
 						float: left;
