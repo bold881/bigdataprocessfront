@@ -1,5 +1,5 @@
 <template>
-    <el-row :gutter="20">
+    <el-row :gutter="20" class="padding-20">
       <el-col :span="12">
         <el-row>
           <el-card class="box-card card-left-top">
@@ -106,7 +106,7 @@
           </div>
           <div>
             <el-date-picker v-model="vDate" type="date" placeholder="选择日期"></el-date-picker>
-            <div id="chartLine" style="width:100%; height:400px;"></div>
+            <div id="chartLine" style="width:100%; height:300px;"></div>
           </div>
         </el-card>
       </el-col>
@@ -116,7 +116,7 @@
 <script>
 import echarts from "echarts";
 export default {
-  name: "area-chart",
+  name: "dashboard",
   data() {
     return {
       ztjhs: "0",
@@ -286,4 +286,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
       margin-bottom: 0;
     }
   }
+
+.padding-20 {
+  padding: 20px;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
 </style>

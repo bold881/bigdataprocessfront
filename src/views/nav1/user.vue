@@ -1,5 +1,10 @@
 <template>
 	<section>
+		<el-breadcrumb separator="/" class="breadcrumb-inner">
+			<el-breadcrumb-item v-for="item in $route.matched" :key="item.path">
+				{{ item.name }}
+			</el-breadcrumb-item>
+		</el-breadcrumb>
 		<!--工具条-->
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
 			<el-form :inline="true" :model="filters">
@@ -73,5 +78,19 @@
 </script>
 
 <style scoped>
+	body {
+		font-family: "Microsoft Yahei","Lato", Helvetica, Arial, sans-serif;
+		font-size: 14px;
+		line-height: 1.42857;
+		color: #767676;
+	}
+	.el-breadcrumb {
+    	padding: 10px 15px;
+    	background-color: #f3f3f3;
+		font-size: 12px;
+	}
+	.padding-20 {
+		padding: 20px;
+	}
 
 </style>
