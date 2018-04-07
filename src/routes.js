@@ -7,7 +7,7 @@ import Form from './views/nav1/Form.vue'
 import user from './views/nav1/user.vue'
 import Dashboard from './views/Dashboard.vue'
 import Page5 from './views/nav2/Page5.vue'
-import Page6 from './views/nav3/Page6.vue'
+import Page6 from './views/nav2/Page6.vue'
 import echarts from './views/charts/echarts.vue'
 
 let routes = [

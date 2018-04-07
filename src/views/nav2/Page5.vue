@@ -207,6 +207,7 @@ body {
 }
 .el-pagination {
 	float: right;
+	padding-bottom: 10px;
 }
 .el-pagination button,
 .el-pagination span:not([class*="suffix"]) {
