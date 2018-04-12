@@ -42,7 +42,7 @@
 			<el-select class="chart-data-type" v-model="value" placeholder="请选择">
     		<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
   		</el-select>
-			<div id="chartLine" style="width:100%; height:400px; padding:20px 0"></div>
+			<div id="chartColumn" style="width:100%; height:400px; padding:20px 0"></div>
 				<div>
 					<el-table :data="tableData" style="width: 100%;" :default-sort = "{prop: 'date', order: 'descending'}">
 						<el-table-column prop="date" label="日期"></el-table-column>
@@ -82,52 +82,43 @@ export default {
     };
   },
   methods: {
-    drawLineChart() {
-      this.chartLine = echarts.init(document.getElementById("chartLine"));
-      this.chartLine.setOption({
-        title: {
-          text: "广告主运营趋势",
-          left: "center"
+    drawColumnChart() {
+      this.chartColumn = echarts.init(document.getElementById('chartColumn'));
+      this.chartColumn.setOption({
+        title: { 
+          text: '活动分析',
+          left: 'center',
+         },
+        tooltip: {},
+        xAxis: {
+            data: ["3月22日", "3月23日", "3月24日"]
         },
-        tooltip: {
-          trigger: "axis"
-        },
-        legend: {
-          data: ["重庆寒武纪信息技术有限公司"],
-          bottom: 10
-        },
+        yAxis: {},
         grid: {
-          left: "3%",
+          left: "4%",
           right: "4%",
           top: "8%",
           bottom: "13%",
           containLabel: true
         },
-        xAxis: {
-          type: "category",
-          boundaryGap: false,
-          data: ["2018-3-22", "2018-3-23", "2018-3-24", "2018-3-25"]
+        legend: {
+          data: ["重庆寒武纪信息技术有限公司"],
+          bottom: 10
         },
-        yAxis: {
-          type: "value"
-        },
-        series: [
-          {
-            name: "重庆寒武纪信息技术有限公司",
-            type: "line",
-            smooth: true,
-            stack: "总量",
-            data: [0.1, 0.3, 0.21, 0.12, 0.64, 0.63, 0.99]
-          }
-        ]
+        series: [{
+            name: '重庆寒武纪信息技术有限公司',
+            type: 'bar',
+            barMaxWidth: 80,
+            data: [5, 20, 36]
+          }]
       });
-    }
+    },
   },
   mounted: function() {
-    this.drawLineChart();
+    this.drawColumnChart();
   },
   updated: function() {
-    this.drawLineChart();
+    this.drawColumnChart();
   }
 };
 </script>
@@ -196,8 +187,7 @@ body {
   font-weight: bold;
   font-size: 12px;
 }
-.el-table th,
-.el-table tr {
+.el-table th {
   background-color: #f3f3f3;
 }
 .chart-data-type {
@@ -206,8 +196,8 @@ body {
   padding-bottom: 0;
 }
 .el-pagination {
-	float: right;
-	padding-bottom: 10px;
+  float: right;
+  padding-bottom: 10px;
 }
 .el-pagination button,
 .el-pagination span:not([class*="suffix"]) {

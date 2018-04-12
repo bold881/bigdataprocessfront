@@ -57,7 +57,6 @@
 					<el-col :span="24" class="content-wrapper">
 						<transition name="fade" mode="out-in">
 							<router-view></router-view>
-							<el-button>我是个按钮</el-button>
 						</transition>
 					</el-col>
 				</div>
@@ -123,8 +122,9 @@
 		mounted() {
 			var user = sessionStorage.getItem('user');
 			if (user) {
+				console.log(user);
 				user = JSON.parse(user);
-				this.sysUserName = user.name || '';
+				this.sysUserName = user.Name || '';
 				this.sysUserAvatar = user.avatar || '';
 			}
 

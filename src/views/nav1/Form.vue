@@ -97,6 +97,7 @@ export default {
 		margin-bottom: 10px;
 		border-radius: 2px;
 		box-shadow: 0 1px rgba(0, 0, 0, 0.05);
+		height: auto;
 	}
 	.panel-body {
 		padding: 15px;

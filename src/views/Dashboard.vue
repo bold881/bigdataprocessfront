@@ -9,26 +9,26 @@
             <div class="card-body">
               <section class="panel panel-box">
                 <div class="panel-left panel-item bg-info">
-                  <h1 class="vue-binding">{{ztjhs}}</h1>
+                  <h1 class="vue-binding">{{zaitoujihuashu}}</h1>
                   <p>在投计划数</p>
                 </div>
                 <div class="panel-right panel-item bg-info">
-                  <h1 class="vue-binding">{{zthds}}</h1>
+                  <h1 class="vue-binding">{{zaitouhuodongshu}}</h1>
                   <p>在投活动数</p>
                 </div>
               </section>
               <div>
                 <ul class="list-justified">
                   <li>
-                    <p>0</p>
+                    <p>{{zongbaoguang}}</p>
                     <p>总曝光</p>
                   </li>
                   <li>
-                    <p>0</p>
+                    <p>{{zongdianji}}</p>
                     <p>总点击</p>
                   </li>
                   <li>
-                    <p>0.00%</p>
+                    <p>{{dianjilv}}%</p>
                     <p>点击率</p>
                   </li>
                 </ul>
@@ -46,14 +46,12 @@
                 <el-col :span="8">
                   <section class="panel panel-box">
                     <div class="panel-top bg-success">
-                      
                       <h1>账户</h1>
-                      
                     </div>
                     <div>
                       <ul class="list-justified text-center">
                         <li>
-                          <p>-￥18.00</p>
+                          <p>{{yue}}</p>
                           <p class="text-muted">账户余额</p>
                         </li>
                       </ul>
@@ -70,7 +68,7 @@
                     <div>
                       <ul class="list-justified text-center">
                         <li>
-                          <p>￥0.00</p>
+                          <p>{{zuoriguanggaohuafei}}</p>
                           <p class="text-muted">昨日广告花费</p>
                         </li>
                       </ul>
@@ -87,7 +85,7 @@
                     <div>
                       <ul class="list-justified text-center">
                         <li>
-                          <p>￥0.00</p>
+                          <p>{{jinriguanggaohuafei}}</p>
                           <p class="text-muted">今日广告花费</p>
                         </li>
                       </ul>
@@ -105,7 +103,7 @@
             <span class="jrtfgl"><i class="el-icon-menu"></i>今日投放状况</span>
           </div>
           <div>
-            <el-date-picker v-model="vDate" type="date" placeholder="选择日期"></el-date-picker>
+            <el-date-picker v-model="date" type="date" placeholder="选择日期"></el-date-picker>
             <div id="chartLine" style="width:100%; height:300px;"></div>
           </div>
         </el-card>
@@ -115,13 +113,23 @@
 
 <script>
 import echarts from "echarts";
+import { getDashboardData } from "../api/api";
+
 export default {
   name: "dashboard",
   data() {
     return {
-      ztjhs: "0",
-      zthds: "0",
-      vDate: ''
+      date: '',
+      zaitoujihuashu: "0",
+      zaitouhuodongshu: "0",
+      zongbaoguang: "",
+      zongdianji: "",
+      yue: "",
+      zuoriguanggaohuafei: '',
+      jinriguanggaohuafei: '',
+      baoguangcishu: '',
+      dianjicishu: '',
+      dianjilv: '',
     };
   },
   methods: {
@@ -136,19 +144,19 @@ export default {
         },
         legend: {
           data: ["曝光次数", "点击次数"],
-          top: 10,
-          right: 0
+          bottom: 0,
         },
         grid: {
+          top: "5%",
           left: "3%",
           right: "4%",
-          bottom: "3%",
+          bottom: "13%",
           containLabel: true
         },
         xAxis: {
           type: "category",
           boundaryGap: false,
-          data: ["0", "2", "4", "6", "8", "10", "12", "14", "16", "18", "20", "22"]
+          data: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"]
         },
         yAxis: {
           type: "value"
@@ -157,21 +165,48 @@ export default {
           {
             name: "曝光次数",
             type: "line",
-            stack: "总量",
-            data: [0.1, 0.3, 0.21, 0.12, 0.64, 0.63, 0.99]
+            smooth: true,
+            data: this.baoguangcishu,
           },
           {
             name: "点击次数",
             type: "line",
-            stack: "总量",
-            data: [0.73, 0.64, 0.90, 0.31, 0.76, 0.16, 0.84]
+            smooth: true,
+            data: this.dianjicishu,
           }
         ]
       });
+    },
+    initData() {
+      var userstr = sessionStorage.getItem("user");
+      if(userstr) {
+        var user = JSON.parse(userstr);
+        var today = new Date();
+        var date =  today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate();
+        var params = {id:user.ID, date:date}
+        getDashboardData(params).then(data => {
+          var retObj = data.data;
+          if(retObj) {
+            this.date = retObj.Date;
+            this.zaitoujihuashu = retObj.Zaitoujihuashu;
+            this.zaitouhuodongshu = retObj.Zaitouhuodongshu;
+            this.zongbaoguang = retObj.Zongbaoguang;
+            this.zongdianji = retObj.Zongdianji;
+            this.yue = retObj.Yue;
+            this.zuoriguanggaohuafei = retObj.Zuoriguanggaohuafei;
+            this.jinriguanggaohuafei = retObj.Jinriguanggaohuafei;
+            this.baoguangcishu = retObj.Baoguangcishu;
+            this.dianjicishu = retObj.Dianjicishu;
+            this.dianjilv = this.zongdianji/this.zongbaoguang*100;
+          }
+          
+        });
+      }
     }
   },
   mounted: function() {
     this.drawLineChart();
+    this.initData();
   },
   updated: function() {
     this.drawLineChart();
