@@ -183,7 +183,7 @@ export default {
     },
     changeDateSelection(curDate) {
       this.vDuration = curDate;
-
+      this.radioDateSelection = "";
       this.getRundataByperiod();
     },
     getRundataByperiod() {
@@ -194,6 +194,15 @@ export default {
           Id: this.userid
         };
         getDataPeriod(params).then(data => {
+          if (data.data === null) {
+            this.tableData = "";
+            this.tableItemTotalSize = 0;
+            this.tableItemContainer = "";
+            this.totalTableData = '';
+            this.linechartDateArray = '';
+            this.linechartValueArray = '';
+            return;
+          }
           var totalTableItem = new Array();
           totalTableItem.huizong = "全部加总";
           totalTableItem.baoguangcishu = 0;
